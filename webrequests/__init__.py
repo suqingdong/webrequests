@@ -8,12 +8,12 @@ import requests
 from simple_loggers import SimpleLogger
 
 
-__version__ = '1.0.0'
+__version__ = '1.0.1'
 __author__ = 'suqingdong'
 __author_email__ = '1078595229@qq.com'
 
 
-class WebRequst(object):
+class WebRequest(object):
     logger = SimpleLogger(level='info')
 
     @classmethod
@@ -83,20 +83,20 @@ if __name__ == '__main__':
 
     url = 'http://output.nsfc.gov.cn/captcha/defaultCaptcha'
 
-    # resp = WebRequst.get_response(url)
+    # resp = WebRequest.get_response(url)
     # if resp:
     #     print(type(resp))
     #     print(resp.headers)
     # else:
     #     print('failed')
     
-    # WebRequst.download(url, 'out.jpg')
+    # WebRequest.download(url, 'out.jpg')
 
     # session = requests.session()
-    # resp = WebRequst.get_response(url, session=session)
+    # resp = WebRequest.get_response(url, session=session)
     # print(resp.cookies)
     # print(session.cookies)
 
     url = 'http://www.cip.cc/'
-    soup = WebRequst.get_soup(url)
+    soup = WebRequest.get_soup(url)
     print(soup.select_one('.kq-well pre').text.strip())
