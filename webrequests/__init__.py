@@ -83,19 +83,19 @@ if __name__ == '__main__':
 
     url = 'http://output.nsfc.gov.cn/captcha/defaultCaptcha'
 
-    # resp = WebRequest.get_response(url)
-    # if resp:
-    #     print(type(resp))
-    #     print(resp.headers)
-    # else:
-    #     print('failed')
+    resp = WebRequest.get_response(url)
+    if resp:
+        print(type(resp))
+        print(resp.headers)
+    else:
+        print('failed')
     
-    # WebRequest.download(url, 'out.jpg')
+    WebRequest.download(url, 'out.jpg')
 
-    # session = requests.session()
-    # resp = WebRequest.get_response(url, session=session)
-    # print(resp.cookies)
-    # print(session.cookies)
+    session = requests.session()
+    resp = WebRequest.get_response(url, session=session)
+    print(resp.cookies)
+    print(session.cookies)
 
     url = 'http://www.cip.cc/'
     soup = WebRequest.get_soup(url)

@@ -1,9 +1,15 @@
-# A simple wrapper of requests
+# A simple wrapper of requests, easy to use!
 
 ## Installation
 ```bash
 pip install webrequests
 ```
+
+## Features
+- Random User-Agent automatic
+- Try again when request failed
+- Download file from an URL
+- Get a soup from an URL
 
 ## Usage
 ```python
