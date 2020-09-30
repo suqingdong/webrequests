@@ -8,11 +8,13 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 info = json.load(open(os.path.join(BASE_DIR, 'webrequests', 'version.json')))
 
+print(info)
+
 setup(
     name='webrequests',
     version=info['version'],
     author=info['author'],
-    author_email=['author_email'],
+    author_email=info['author_email'],
     description='A simple wrapper of requests, easy but useful!',
     long_description=open(os.path.join(BASE_DIR, 'README.md')).read(),
     long_description_content_type="text/markdown",
@@ -21,7 +23,7 @@ setup(
         'Tracker': 'https://github.com/suqingdong/webrequests/issues',
     },
     license='BSD License',
-    install_requires=open(os.path.join(BASE_DIR, 'requirements.txt')).read().split('\n'),
+    install_requires=open(os.path.join(BASE_DIR, 'requirements.txt')).read().strip().split('\n'),
     packages=find_packages(),
     include_package_data=True,
     classifiers=[
