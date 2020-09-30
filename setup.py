@@ -1,18 +1,19 @@
 # -*- encoding: utf8 -*-
 import os
+import json
 from setuptools import setup, find_packages
 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-from webrequests import __version__, __author__, __author_email__
 
+info = json.load(open(os.path.join(BASE_DIR, 'webrequests', 'version.json')))
 
 setup(
     name='webrequests',
-    version=__version__,
-    author=__author__,
-    author_email=__author_email__,
-    description='A simple wrapper of requests',
+    version=info['version'],
+    author=info['author'],
+    author_email=['author_email'],
+    description='A simple wrapper of requests, easy but useful!',
     long_description=open(os.path.join(BASE_DIR, 'README.md')).read(),
     long_description_content_type="text/markdown",
     url='https://github.com/suqingdong/webrequests',
@@ -20,11 +21,7 @@ setup(
         'Tracker': 'https://github.com/suqingdong/webrequests/issues',
     },
     license='BSD License',
-    install_requires=[
-        'bs4',
-        'requests',
-        'simple-loggers'
-    ],
+    install_requires=open(os.path.join(BASE_DIR, 'requirements.txt')).read().split('\n'),
     packages=find_packages(),
     include_package_data=True,
     classifiers=[

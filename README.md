@@ -1,4 +1,4 @@
-# A simple wrapper of requests, easy to use!
+# A simple wrapper of requests, easy but useful!
 
 ## Installation
 ```bash

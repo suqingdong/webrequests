@@ -1,5 +1,7 @@
 # -*- coding=utf-8 -*-
+import os
 import time
+import json
 import random
 
 import bs4
@@ -8,10 +10,13 @@ import requests
 from simple_loggers import SimpleLogger
 
 
-__version__ = '1.0.1'
-__author__ = 'suqingdong'
-__author_email__ = '1078595229@qq.com'
+BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
+info = json.load(open(os.path.join(BASE_DIR, 'version.json')))
+
+__version__ = info['version']
+__author__ = info['author']
+__author_email__ = info['author_email']
 
 class WebRequest(object):
     logger = SimpleLogger(level='info')
