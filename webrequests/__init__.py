@@ -18,8 +18,30 @@ __version__ = info['version']
 __author__ = info['author']
 __author_email__ = info['author_email']
 
+
 class WebRequest(object):
-    logger = SimpleLogger(level='info')
+    """
+    >>> url = 'http://output.nsfc.gov.cn/captcha/defaultCaptcha'
+
+    >>> resp = WebRequest.get_response(url)
+    >>> if resp:
+    >>>     print(type(resp))
+    >>>     print(resp.headers)
+    >>> else:
+    >>>     print('failed')
+    
+    >>> WebRequest.download(url, 'out.jpg')
+
+    >>> session = requests.session()
+    >>> resp = WebRequest.get_response(url, session=session)
+    >>> print(resp.cookies)
+    >>> print(session.cookies)
+
+    >>> url = 'http://www.cip.cc/'
+    >>> soup = WebRequest.get_soup(url)
+    >>> print(soup.select_one('.kq-well pre').text.strip())
+    """
+    logger = SimpleLogger(name='WebRequest', level='info')
 
     @classmethod
     def random_ua(cls):
@@ -53,10 +75,10 @@ class WebRequest(object):
                 resp = r.request(method, url, **kwargs)
                 if resp.status_code == 200:
                     return resp
-                cls.logger.warning('bad status code: {}'.format(resp.status_code))
+                cls.logger.warning('{}st time bad status code: {} [{}]'.format(n + 1, resp.status_code, resp.text))
             except Exception as e:
-                cls.logger.debug('request failed {}st time for url: {}, as {}'.format(n + 1, url, e))
-                time.sleep(random.randint(2, 6))
+                cls.logger.debug('{}st time failed for url: {}, as {}'.format(n + 1, url, e))
+            time.sleep(random.randint(2, 6))
         
         cls.logger.error('failed requests for url: {}'.format(url))
         exit(1)
