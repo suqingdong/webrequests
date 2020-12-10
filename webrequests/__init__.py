@@ -60,7 +60,7 @@ class WebRequest(object):
     def get_response(cls, url, method='GET', session=None, max_try=10, allowed_codes=[200], **kwargs):
         """
             params
-                - allowed_codes: the status_code
+                - allowed_codes: the allowed status_code
 
             Return a response object
         """
