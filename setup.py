@@ -6,16 +6,16 @@ from setuptools import setup, find_packages
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-info = json.load(open(os.path.join(BASE_DIR, 'webrequests', 'version.json')))
+version_info = json.load(open(os.path.join(BASE_DIR, 'webrequests', 'version.json')))
 
-print(info)
+print(version_info)
 
 setup(
     name='webrequests',
-    version=info['version'],
-    author=info['author'],
-    author_email=info['author_email'],
-    description='A simple wrapper of requests, easy but useful!',
+    version=version_info['version'],
+    author=version_info['author'],
+    author_email=version_info['author_email'],
+    description=version_info['desc'],
     long_description=open(os.path.join(BASE_DIR, 'README.md')).read(),
     long_description_content_type="text/markdown",
     url='https://github.com/suqingdong/webrequests',

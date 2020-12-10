@@ -12,12 +12,9 @@ from simple_loggers import SimpleLogger
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
-info = json.load(open(os.path.join(BASE_DIR, 'version.json')))
+version_info = json.load(open(os.path.join(BASE_DIR, 'version.json')))
 
-__version__ = info['version']
-__author__ = info['author']
-__author_email__ = info['author_email']
-
+__version__ = version_info['version']
 
 class WebRequest(object):
     """
@@ -60,8 +57,11 @@ class WebRequest(object):
 
 
     @classmethod
-    def get_response(cls, url, method='GET', session=None, max_try=10, **kwargs):
+    def get_response(cls, url, method='GET', session=None, max_try=10, allowed_codes=[200], **kwargs):
         """
+            params
+                - allowed_codes: the status_code
+
             Return a response object
         """
         if 'headers' not in kwargs:
@@ -73,7 +73,7 @@ class WebRequest(object):
             try:
                 r = session or requests
                 resp = r.request(method, url, **kwargs)
-                if resp.status_code == 200:
+                if resp.status_code in allowed_codes:
                     return resp
                 cls.logger.warning('{}st time bad status code: {} [{}]'.format(n + 1, resp.status_code, resp.text))
             except Exception as e:
