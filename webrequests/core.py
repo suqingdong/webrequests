@@ -11,25 +11,29 @@ from . import util
 
 
 class WebRequest(object):
-    """
+    """Simple Web Requests Wrapper
+
+    >>> from webrequests import WebRequest
+    >>> 
+    >>> # request an url
     >>> url = 'http://output.nsfc.gov.cn/captcha/defaultCaptcha'
-
     >>> resp = WebRequest.get_response(url)
-    >>> if resp:
-    >>>     print(type(resp))
-    >>>     print(resp.headers)
-    >>> else:
-    >>>     print('failed')
-    
-    >>> WebRequest.download(url, 'out.jpg')
-
+    >>> resp = WebRequest.get_response(url, method='POST', max_try=5, timeout=5)
+    >>> print(resp.headers)
+    >>> 
+    >>> # download file from an url
+    >>> url = 'https://hgdownload.cse.ucsc.edu/goldenPath/hg19/bigZips/hg19.fa.gz'
+    >>> WebRequest.download(url)
+    >>> WebRequest.download(url, 'out.jpg', max_try=5, timeout=10)
+    >>> 
+    >>> # request with session
     >>> session = requests.session()
-    >>> resp = WebRequest.get_response(url, session=session)
+    >>> resp = WebRequest.get_response('http://www.cip.cc/', session=session)
     >>> print(resp.cookies)
     >>> print(session.cookies)
-
-    >>> url = 'http://www.cip.cc/'
-    >>> soup = WebRequest.get_soup(url)
+    >>> 
+    >>> # get a soup
+    >>> soup = WebRequest.get_soup('http://www.cip.cc/')
     >>> print(soup.select_one('.kq-well pre').text.strip())
     """
     logger = SimpleLogger(name='WebRequest', level='info')
@@ -113,25 +117,3 @@ class WebRequest(object):
             return False
         soup = bs4.BeautifulSoup(resp.text, features=features)
         return soup
-
-
-if __name__ == '__main__':
-
-    url = 'https://hgdownload.cse.ucsc.edu/goldenPath/hg19/bigZips/hg19.fa.gz'
-
-    resp = WebRequest.get_response(url, stream=True)
-    if resp:
-        print(resp.headers)
-    else:
-        print('failed')
-    
-    WebRequest.download(url)
-
-    session = requests.session()
-    resp = WebRequest.get_response(url, session=session)
-    print(resp.cookies)
-    print(session.cookies)
-
-    url = 'http://www.cip.cc/'
-    soup = WebRequest.get_soup(url)
-    print(soup.select_one('.kq-well pre').text.strip())
