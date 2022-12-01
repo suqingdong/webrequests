@@ -6,10 +6,10 @@ pip install webrequests
 ```
 
 ## Features
-- Random User-Agent automatic
+- Random User-Agent
 - Try again when request failed
-- Download file from an URL
-- Get a soup from an URL
+- Download file from an url, with progress bar
+- Get a BeautifulSoup from an url
 
 ## Usage
 ```python

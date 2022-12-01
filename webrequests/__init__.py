@@ -1,6 +1,8 @@
 import json
 from pathlib import Path
 
+from .core import WebRequest
+
 
 BASE_DIR = Path(__file__).resolve().parent
 
