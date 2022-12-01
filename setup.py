@@ -1,29 +1,23 @@
-# -*- encoding: utf8 -*-
 import os
 import json
+from pathlib import Path
 from setuptools import setup, find_packages
 
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-version_info = json.load(open(os.path.join(BASE_DIR, 'webrequests', 'version.json')))
-
-print(version_info)
+BASE_DIR = Path(__file__).resolve().parent
+version_info = json.load(BASE_DIR.joinpath('webrequests', 'version.json').open())
 
 setup(
-    name='webrequests',
+    name=version_info['prog'],
     version=version_info['version'],
     author=version_info['author'],
     author_email=version_info['author_email'],
     description=version_info['desc'],
-    long_description=open(os.path.join(BASE_DIR, 'README.md')).read(),
+    long_description=BASE_DIR.joinpath('README.md').read_text(),
     long_description_content_type="text/markdown",
-    url='https://github.com/suqingdong/webrequests',
-    project_urls={
-        'Tracker': 'https://github.com/suqingdong/webrequests/issues',
-    },
+    url=version_info['url'],
     license='BSD License',
-    install_requires=open(os.path.join(BASE_DIR, 'requirements.txt')).read().strip().split('\n'),
+    install_requires=BASE_DIR.joinpath('requirements.txt').read_text().strip().split('\n'),
     packages=find_packages(),
     include_package_data=True,
     classifiers=[
@@ -32,8 +26,6 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
         'Topic :: Software Development :: Libraries'

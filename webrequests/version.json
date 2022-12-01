@@ -1,6 +1,8 @@
 {
-    "version": "1.0.4",
+    "prog": "webrequests",
+    "desc": "A simple wrapper of requests, simple but useful!",
+    "url": "https://github.com/suqingdong/webrequests",
     "author": "suqingdong",
-    "author_email": "1078595229@qq.com",
-    "desc": "A simple wrapper of requests, easy but useful!"
+    "author_email": "suqingdong1114@gmail.com",
+    "version": "1.0.5"
 }
