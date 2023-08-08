@@ -55,7 +55,7 @@ class WebRequest(object):
 
 
     @classmethod
-    def get_response(cls, url, method='GET', session=None, max_try=10, allowed_codes=[200], **kwargs):
+    def get_response(cls, url, method='GET', session=None, max_try=10, allowed_codes=[200], encoding='utf-8', **kwargs):
         """
             params
                 - allowed_codes: the allowed status_code
@@ -71,6 +71,7 @@ class WebRequest(object):
             try:
                 r = session or requests
                 resp = r.request(method, url, **kwargs)
+                resp.encoding = encoding or 'utf-8'
                 if resp.status_code in allowed_codes:
                     return resp
                 cls.logger.warning('{}st time bad status code: {} [{}]'.format(n + 1, resp.status_code, resp.text))
