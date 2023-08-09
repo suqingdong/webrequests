@@ -11,6 +11,8 @@ from simple_loggers import SimpleLogger
 from . import util
 
 
+
+
 class WebRequest(object):
     """Simple Web Requests Wrapper
 
@@ -38,6 +40,8 @@ class WebRequest(object):
     >>> print(soup.select_one('.kq-well pre').text.strip())
     """
     logger = SimpleLogger(name='WebRequest', level='info')
+
+    MAX_CONTENT_SIZE_FOR_DETECTION  = 2 * 1024 * 1024
 
     @classmethod
     def random_ua(cls):
@@ -72,7 +76,16 @@ class WebRequest(object):
             try:
                 r = session or requests
                 resp = r.request(method, url, **kwargs)
-                resp.encoding = encoding or chardet.detect(resp.content[:5000])['encoding']
+
+                # only detect encoding when Content-Length < 2M
+                content_length = int(resp.headers.get('Content-Length', 0))
+                if not encoding and content_length <= cls.MAX_CONTENT_SIZE_FOR_DETECTION:
+                    result = chardet.detect(resp.content)
+                    if result['confidence'] > 0.9:
+                        resp.encoding = result['encoding']
+                elif encoding:
+                    resp.encoding = encoding
+
                 if resp.status_code in allowed_codes:
                     return resp
                 cls.logger.warning('{}st time bad status code: {} [{}]'.format(n + 1, resp.status_code, resp.text))
@@ -81,7 +94,7 @@ class WebRequest(object):
             time.sleep(random.randint(2, 6))
         
         cls.logger.error('failed requests for url: {}'.format(url))
-        return False
+        return None
         
     @classmethod
     def download(cls, url, outfile=None, chunk_size=4096, show_progress=True, **kwargs):
